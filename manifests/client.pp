@@ -6,7 +6,18 @@ class sensu::client(
   $mq_password "sensu",
   $mq_vhost = "/"
 ) {
-  package { 'sensu': ensure => installed }
+  apt::source { 'sensu':
+    location   => "http://repos.sensuapp.org/apt",
+    repos      => "main",
+    key        => "7580C77F",
+    key_source => "http://repos.sensuapp.org/apt/pubkey.gpg",
+  }
+
+  package { ['sensu']:
+    ensure  => installed,
+    require => Apt::Source['sensu']
+  }
+
   package { 'nagios-plugins': ensure => installed }
 
   file { '/etc/sensu/config.json':
