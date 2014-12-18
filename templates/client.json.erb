@@ -1,0 +1,7 @@
+{
+  "client": {
+    "name": "<%= @hostname -%>",
+    "address": "<%= @ip_address -%>",
+    "subscriptions": [<%= subscriptions.map{ |subscription| "\"#{subscription}\"" }.join(',') -%>]
+  }
+}
